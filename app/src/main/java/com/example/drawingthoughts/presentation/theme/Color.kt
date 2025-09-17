@@ -1,4 +1,4 @@
-package com.example.drawingthoughts.ui.theme
+package com.example.drawingthoughts.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
