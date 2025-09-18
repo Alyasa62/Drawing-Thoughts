@@ -1,6 +1,9 @@
 package com.example.drawingthoughts.presentation.whiteBoard.component
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
@@ -38,14 +41,18 @@ fun DrawingToolCard(
 ) {
     AnimatedVisibility(
         modifier = modifier,
-        visible = isVisible ) {
+        visible = isVisible,
+        enter = slideInVertically(tween(durationMillis = 500) ) { h -> h },
+        exit = slideOutVertically(tween(durationMillis = 500) ) { h -> h }
+
+    ) {
         ElevatedCard {
             Row(
                 modifier = modifier.padding(10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ){
                 LazyRow(
-                    modifier = modifier.weight(1f),
+                    modifier = Modifier.weight(1f),
                     horizontalArrangement = spacedBy(10.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -72,39 +79,6 @@ fun DrawingToolCard(
         }
 
     }
-
-    ElevatedCard {
-        Row(
-            modifier = modifier.padding(10.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            LazyRow(
-                modifier = modifier.weight(1f),
-                horizontalArrangement = spacedBy(10.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                items(
-                    DrawingTool.entries
-                ){
-                        drawingTool ->
-                    DrawingToolItem(
-                        drawingTool= drawingTool,
-                        isSelected = selectedTool == drawingTool,
-                        onToolClick = { onToolSelected(drawingTool) }
-                    )
-
-                }
-            }
-            FilledIconButton(onClick = { onClosedIconClick() }) {
-                Icon(
-                    imageVector = Icons.Default.Close,
-                    contentDescription = "Close",
-                    modifier = Modifier.size(20.dp)
-                )
-            }
-        }
-    }
-
 
 }
 
@@ -142,7 +116,7 @@ private fun DrawingToolItem(
         }
         if(isSelected) {
             Box(
-                modifier = modifier.
+                modifier = Modifier.
                 background(LocalContentColor.current)
                     .size(25.dp, 1 .dp)
             )

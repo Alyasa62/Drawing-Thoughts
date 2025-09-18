@@ -147,16 +147,7 @@ private fun MoreOptionsMenu (
 
             }
         )
-        DropdownMenuItem(
-            text = { Text(text = "Stroke Width") },
-            onClick = { onStrokeWidthClick()
-                onMenuDismiss()
-            },
-            leadingIcon = {
-                Icon(imageVector= Icons.Default.Edit, contentDescription = "Stroke Width")
 
-            }
-        )
     }
 }
 

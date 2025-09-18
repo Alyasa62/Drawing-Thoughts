@@ -1,6 +1,7 @@
 package com.example.drawingthoughts.presentation.whiteBoard
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -11,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.drawingthoughts.presentation.whiteBoard.component.DrawingToolCard
+import com.example.drawingthoughts.presentation.whiteBoard.component.DrawingToolFAB
 import com.example.drawingthoughts.presentation.whiteBoard.component.TopBar
 import com.example.drawingthoughts.presentation.whiteBoard.domain.model.DrawingTool
 
@@ -22,8 +24,11 @@ fun WhiteBoardScreen(
     var isDrawingToolCardVisible by rememberSaveable {
         mutableStateOf(false)
     }
+    var selectedDrawingTool by rememberSaveable {
+        mutableStateOf(DrawingTool.PEN)
+    }
     Box(
-        modifier = modifier
+        modifier = modifier.fillMaxSize()
     ) {
         TopBar(
             modifier = Modifier.align(Alignment.TopCenter)
@@ -36,11 +41,20 @@ fun WhiteBoardScreen(
             onBackgroundClick = { },
             onSettingsClick = { }
         )
+        DrawingToolFAB(
+            modifier = Modifier.align(Alignment.BottomEnd)
+                .padding(20.dp),
+            isVisible = !isDrawingToolCardVisible,
+            selectedTool = selectedDrawingTool,
+            onClick = {isDrawingToolCardVisible = true}
+        )
+
+
         DrawingToolCard(
             modifier = Modifier.align(Alignment.BottomCenter)
                 .padding(20.dp),
-            selectedTool = DrawingTool.PEN,
-            onToolSelected = { },
+            selectedTool = selectedDrawingTool,
+            onToolSelected = { selectedDrawingTool = it },
             onClosedIconClick = { isDrawingToolCardVisible = false },
             isVisible = isDrawingToolCardVisible
         )
